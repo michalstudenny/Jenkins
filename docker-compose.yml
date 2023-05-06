@@ -1,0 +1,34 @@
+version: '3'
+services:
+  centos_docker:
+    build:
+      context: ./centos_docker
+      dockerfile:  Dockerfile
+    image: ${registryUrl}/centos:${BUILDFULLNAME}
+    tty: true
+    ports:
+        - "8765:8765"
+    volumes:
+      - ./datavolume:/usr/share/centos_docker/data
+  ubuntu_docker:
+    build:
+      context: ./ubuntu_docker
+      dockerfile:  Dockerfile
+    image: ${registryUrl}/ubuntu:${BUILDFULLNAME}
+    tty: true
+    ports:
+        - "8766:8766"
+    volumes:
+      - ./datavolume:/usr/share/ubuntu_docker/data
+  custom-nginx:
+    build: 
+      context: ./custom-nginx
+      dockerfile: Dockerfile
+    image: ${registryUrl}/nginx:${BUILDFULLNAME}
+    tty: true
+    ports:
+        - "8767:8767"
+    volumes:
+      - ./datavolume:/usr/share/custom-nginx/data
+volumes:
+  datavolume: {}
